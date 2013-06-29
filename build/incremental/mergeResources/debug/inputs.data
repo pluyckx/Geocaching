@@ -1,0 +1,23 @@
+# incremental data. DO NOT EDIT.
+# format is <lastModified> <length> <SHA-1> <path>
+# Encoding is UTF-8
+1371493122000 12329 a8301606e15d4b6dccdd775cc273cfc51a552645 D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable-xhdpi\ic_launcher.png
+1371493121000 254 25b6404e44acb50c82590049639d4fb5fefbac8e D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values-sw720dp-land\dimens.xml
+1372236000000 2308 ff12f6469ef3c8bb76ff8676b033f7a791862d21 D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\database_layout.xml
+1371493121000 181 84de2797380184d8b39af6f829afb092fb956173 D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values-sw600dp\dimens.xml
+1372333642802 2522 df7bd905504e70ab38405e0251b49a1b2c2a534c D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\compass_layout.xml
+1372091498408 75 e626030d7a9d03942e3a1be85d5db99de1780fcc D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\menu\main.xml
+1371493122000 3769 eec07752d40e268ed7f4a1730acc77ab1e40aeb0 D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable-mdpi\ic_launcher.png
+1372253627000 5442 f74a803431dfc5f2ece5d2d533b9ccf7e68efd23 D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\dialog_point.xml
+1371493122000 24654 696bbbc63d2250ef7d3373f2d602e604acd13d8c D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable-xxhdpi\ic_launcher.png
+1372463024261 778 525dc1c3e83cfc4a602e0e0d41c81a49ce4efd80 D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\xml\settings.xml
+1371493122000 7721 39b0f5a0570da92f471225402ad0ea6de30bf2be D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable-hdpi\ic_launcher.png
+1371493121000 211 4e1904afba59d31e5cd6133f6a4c360fa9a5913f D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values\dimens.xml
+1372327940187 1922 528232577e0496e2a4375cccc9281e1cb6af8c9d D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\list_item_layout.xml
+1372170107000 915 637638e52a11d3bd44fed575c8f2e9cae7fb9d73 D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values\styles.xml
+1372465547864 1314 d3c7099869d8bbf8e541f5ab9139ffa316104ca8 D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\settings_layout.xml
+1372165472000 318 f37b4c43b290eba4a42d9102f14a550c301de5c8 D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values-v11\styles.xml
+1372167790000 254 3582fbc75ac95a62d8c7699dbba84e49ddd7ce70 D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable\component_border.xml
+1372090756378 1561 88b4c0ba92915cabcab017e53f8a49c266e94055 D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\activity_main.xml
+1372165241000 361 3f803bd27424fb62e4fe7603d8f081b97792840c D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values-v14\styles.xml
+1372463009102 2469 4fda44818a5b5fc3a0cd4d6c5ca4741766c4a79b D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values\strings.xml

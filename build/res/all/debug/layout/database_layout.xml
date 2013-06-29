@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dip">
+
+        <Button
+                android:id="@+id/b_db_save"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/save"
+                android:layout_column="0"
+                android:layout_weight="1"/>
+
+        <Button
+                android:id="@+id/b_db_add_point"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_point"
+                android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+                style="@style/ListviewHeader"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="@string/name"/>
+
+        <TextView
+                style="@style/ListviewHeader"
+                android:layout_width="0px"
+                android:layout_weight="3"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:text="@string/location"/>
+
+        <TextView
+                style="@style/ListviewHeader"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:text="@string/visible" />
+        </LinearLayout>
+
+
+    <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lv_points"/>
+
+</LinearLayout>

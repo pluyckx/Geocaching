@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="spinner_latitude">
+        <item>N</item>
+        <item>S</item>
+    </string-array>
+    <string-array name="spinner_longitude">
+        <item>E</item>
+        <item>W</item>
+    </string-array>
+
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <string name="add_point">Add Point</string>
+    <string name="add_point_title">Add Point</string>
+    <string name="app_name">Geocaching</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_remove">Remove</string>
+    <string name="edit_point_dialog_add">Add</string>
+    <string name="edit_point_dialog_cancel">Cancel</string>
+    <string name="edit_point_dialog_edit">Edit</string>
+    <string name="edit_point_dialog_title">Edit Point</string>
+    <string name="heading">Heading</string>
+    <string name="latitude">Latitude</string>
+    <string name="location">Location</string>
+    <string name="longitude">Longitude</string>
+    <string name="msg_edit_point_visibility_error">Cannot change the visibility of the point!</string>
+    <string name="msg_name_exists">The name already exists!</string>
+    <string name="msg_remove_failed">Couldn\'t remove \"{item}\".</string>
+    <string name="msg_remove_point">Are you sure to remove \"{item}\"?</string>
+    <string name="msg_remove_success">\"{item}\" successful removed.</string>
+    <string name="msg_unknown_add_point_error">Cannot add the point! An unknown error occurred. Check if the point do not already exist!</string>
+    <string name="msg_unknown_edit_point_error">Cannot edit the point! An unknown error occurred. Check if the point do not already exist!</string>
+    <string name="name">Name</string>
+    <string name="remove_dialog_title">Remove Point</string>
+    <string name="save">Save</string>
+    <string name="set_cat_compass_interface">Compass Interface</string>
+    <string name="set_compass_heading_line">Draw heading direction</string>
+    <string name="set_compass_heading_line_false">Hide heading direction</string>
+    <string name="set_compass_heading_line_true">Show heading direction</string>
+    <string name="set_compass_rotate">Rotate compass</string>
+    <string name="set_compass_rotate_false">Do not rotate compass</string>
+    <string name="set_compass_rotate_true">Rotate compass to heading direction</string>
+    <string name="settings">settings</string>
+    <string name="visible">Visible</string>
+
+    <style name="AppBaseTheme" parent="android:Theme.Holo">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+
+    <style name="ListviewHeader" parent="android:TextAppearance.Holo.Large"></style>
+
+    <style name="LocationText" parent="android:TextAppearance.Holo.Medium">
+        <item name="android:typeface">monospace</item>
+    </style>
+
+</resources>
