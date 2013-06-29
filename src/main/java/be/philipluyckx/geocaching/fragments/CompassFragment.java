@@ -14,6 +14,12 @@ import be.philipluyckx.geocaching.components.Compass;
 import be.philipluyckx.geocaching.utils.DegreeConverter;
 
 /**
+ * TODO:
+ *   make a view that displays information for a selected point like distance and heading
+ *   The point is selectable through a List in a dialog
+ */
+
+/**
  * Created by pluyckx on 6/24/13.
  */
 public class CompassFragment extends Fragment {

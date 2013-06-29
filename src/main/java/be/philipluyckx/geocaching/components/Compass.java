@@ -22,6 +22,14 @@ import be.philipluyckx.geocaching.fragments.SettingsFragment;
 import be.philipluyckx.geocaching.location.ILocationListener;
 
 /**
+ * TODO:
+ * Create Compass Point which holds a GeoPoint + xy information
+ * Redraw: first remove previous points, then draw new ones
+ *         also for the distance circles
+ *         hopefully this speeds up the process and makes it less intensive
+ */
+
+/**
  * Created by pluyckx on 6/26/13.
  */
 public class Compass extends View implements ILocationListener {
