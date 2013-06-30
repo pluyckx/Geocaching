@@ -39,12 +39,16 @@ public class GeoDatabaseBuffer extends Observable implements Iterable<GeoPoint> 
   }
 
   public GeoPoint getPoint(int index) {
-    return points.get(index);
+    if (index < points.size()) {
+      return points.get(index);
+    } else {
+      return null;
+    }
   }
 
   public GeoPoint getPoint(String name) {
     int index = 0;
-    while(index < points.size() && !points.get(index).getName().equals(name)) {
+    while (index < points.size() && !points.get(index).getName().equals(name)) {
       index++;
     }
 
@@ -58,7 +62,7 @@ public class GeoDatabaseBuffer extends Observable implements Iterable<GeoPoint> 
   public boolean addPoint(GeoPoint point) {
     Log.i(TAG, "[addPoint] Adding new point: " + point.toString());
 
-    if(!nameExists(point.getName())) {
+    if (!nameExists(point.getName())) {
       points.add(point);
       this.setChanged();
       this.notifyObservers();
@@ -70,7 +74,7 @@ public class GeoDatabaseBuffer extends Observable implements Iterable<GeoPoint> 
 
   public boolean nameExists(String name) {
     int index = 0;
-    while(index < points.size() && !points.get(index).getName().equals(name)) {
+    while (index < points.size() && !points.get(index).getName().equals(name)) {
       index++;
     }
 
@@ -80,7 +84,7 @@ public class GeoDatabaseBuffer extends Observable implements Iterable<GeoPoint> 
   public boolean removePoint(GeoPoint point) {
     Log.i(TAG, "[removePoint] Removing point: " + point.toString());
 
-    if(points.contains(point)) {
+    if (points.contains(point)) {
       points.remove(point);
       this.setChanged();
       this.notifyObservers();
@@ -93,7 +97,7 @@ public class GeoDatabaseBuffer extends Observable implements Iterable<GeoPoint> 
   public boolean removeAll() {
     Log.i(TAG, "[removeAll]");
 
-    for(GeoPoint gp : points) {
+    for (GeoPoint gp : points) {
       Log.i(TAG, "[removeAll] Removing " + gp.toString());
 
       transactions.add(new TransactionRemove(gp));
@@ -110,8 +114,8 @@ public class GeoDatabaseBuffer extends Observable implements Iterable<GeoPoint> 
   public boolean editPoint(GeoPoint oldPoint, GeoPoint newPoint) {
     Log.i(TAG, "[editPoint] changing " + oldPoint + " to " + newPoint);
 
-    if(points.contains(oldPoint)) {
-      if(oldPoint.getName().equals(newPoint.getName()) || !nameExists(newPoint.getName())) {
+    if (points.contains(oldPoint)) {
+      if (oldPoint.getName().equals(newPoint.getName()) || !nameExists(newPoint.getName())) {
         points.set(points.indexOf(oldPoint), newPoint);
         this.setChanged();
         this.notifyObservers();
@@ -133,7 +137,7 @@ public class GeoDatabaseBuffer extends Observable implements Iterable<GeoPoint> 
   }
 
   public boolean save() {
-    if(transactions.size() == 0) {
+    if (transactions.size() == 0) {
       return true;
     }
 
@@ -142,7 +146,7 @@ public class GeoDatabaseBuffer extends Observable implements Iterable<GeoPoint> 
     do {
       success = transactions.get(0).execute(database);
       transactions.remove(0);
-    } while(transactions.size() > 0 && success);
+    } while (transactions.size() > 0 && success);
 
     return success;
   }

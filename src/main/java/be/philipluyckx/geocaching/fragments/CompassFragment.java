@@ -1,5 +1,6 @@
 package be.philipluyckx.geocaching.fragments;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -7,11 +8,18 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.model.LatLng;
+
+import be.philipluyckx.geocaching.GeocachingApplication;
 import be.philipluyckx.geocaching.R;
 import be.philipluyckx.geocaching.components.Compass;
+import be.philipluyckx.geocaching.datacomponents.GeoPoint;
+import be.philipluyckx.geocaching.dialogs.SelectInformationPointDialog;
 import be.philipluyckx.geocaching.utils.DegreeConverter;
+import be.philipluyckx.geocaching.utils.DistanceConverter;
 
 /**
  * TODO:
@@ -47,10 +55,15 @@ public class CompassFragment extends Fragment {
       }
     }
   };
+
+  private TableLayout mPointInformation;
   private Compass mCompass;
   private TextView mLatitude;
   private TextView mLongitude;
   private TextView mHeading;
+  private TextView mPoint;
+  private TextView mDistance;
+  private TextView mDirection;
 
   @Override
   public void onResume() {
@@ -70,19 +83,49 @@ public class CompassFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.compass_layout, container, false);
 
+    mPointInformation = (TableLayout)view.findViewById(R.id.tl_point);
+    mPointInformation.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        onSelectPoint();
+      }
+    });
+
     mCompass = (Compass) view.findViewById(R.id.compass);
     mCompass.initialize();
-
 
     mLatitude = (TextView) view.findViewById(R.id.tv_latitude);
     mLongitude = (TextView) view.findViewById(R.id.tv_longitude);
     mHeading = (TextView) view.findViewById(R.id.tv_heading);
 
+    mPoint = (TextView) view.findViewById(R.id.tv_point);
+    mDistance = (TextView) view.findViewById(R.id.tv_distance);
+    mDirection = (TextView) view.findViewById(R.id.tv_direction);
+
     Listener l = new Listener();
     mCompass.setLocationListener(l);
     mCompass.setHeadingListener(l);
 
+    GeoPoint p = GeocachingApplication.getApplication().getDatabaseBuffer().getPoint(0);
+    if (p != null) {
+      mPoint.setText(p.getName());
+    }
+
     return view;
+  }
+
+  public void setSelectedPoint(String point) {
+    mPoint.setText(point);
+    updatePointInformation();
+  }
+
+  public String getSelectetPoint() {
+    return mPoint.getText().toString();
+  }
+
+  private void onSelectPoint() {
+    SelectInformationPointDialog dialog = new SelectInformationPointDialog(this);
+    dialog.show(getFragmentManager(), "select_point_dialog");
   }
 
   private void onSetLocation(Bundle data) {
@@ -93,6 +136,28 @@ public class CompassFragment extends Fragment {
     mLatitude.setText((latitude < 0.0 ? "S " : "N ") + tmp);
     tmp = DegreeConverter.toString(Math.abs(longitude));
     mLongitude.setText((longitude < 0.0 ? "W " : "E ") + tmp);
+
+    updatePointInformation();
+  }
+
+  private void updatePointInformation() {
+    GeoPoint point = GeocachingApplication.getApplication().getDatabaseBuffer().getPoint(mPoint.getText().toString());
+    if (point != null) {
+      LatLng position = mCompass.getPosition();
+      float results[] = new float[1];
+      Location.distanceBetween(point.getLocation().latitude, point.getLocation().longitude, position.latitude, position.longitude, results);
+
+      mDistance.setText(DistanceConverter.toString(results[0], DistanceConverter.DISTANCE_METER, DistanceConverter.DISTANCE_AUTO));
+
+      double dLongitude = point.getLocation().longitude - position.longitude;
+      double dLatitude = point.getLocation().latitude - position.latitude;
+      double direction = Math.PI / 2.0 - Math.atan2(dLatitude, dLongitude);
+      mDirection.setText(DegreeConverter.toCompassDirection(direction));
+    } else {
+      mPoint.setText("");
+      mDirection.setText("");
+      mDistance.setText("");
+    }
   }
 
   private void onSetHeading(Bundle data) {
@@ -101,6 +166,8 @@ public class CompassFragment extends Fragment {
     String sAngle = DegreeConverter.toString(angle * 180 / Math.PI);
 
     mHeading.setText(direction + " " + sAngle);
+
+    updatePointInformation();
   }
 
   private void setLocation(double latitude, double longitude) {

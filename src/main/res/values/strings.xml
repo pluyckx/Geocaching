@@ -22,6 +22,10 @@
     <string name="longitude">Longitude</string>
     <string name="heading">Heading</string>
 
+    <string name="point">Point</string>
+    <string name="distance">Distance</string>
+    <string name="direction">Direction</string>
+
     <string name="edit_point_dialog_title">Edit Point</string>
     <string name="edit_point_dialog_add">Add</string>
     <string name="edit_point_dialog_edit">Edit</string>

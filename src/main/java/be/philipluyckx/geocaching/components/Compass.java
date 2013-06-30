@@ -134,6 +134,10 @@ public class Compass extends View implements ILocationListener {
     invalidate();
   }
 
+  public LatLng getLocation() {
+    return mPosition;
+  }
+
   public void cleanup() {
     GeocachingApplication.getApplication().getLocationManager().removeListener(this);
   }
@@ -177,6 +181,10 @@ public class Compass extends View implements ILocationListener {
     return mPosition;
   }
 
+  /**
+   * Returns the current smoothed heading in radians
+   * @return Heading in radians
+   */
   public double getHeading() {
     return orientation.getValue();
   }
@@ -257,11 +265,20 @@ public class Compass extends View implements ILocationListener {
 
           results[0] = results[0] / mMaxDistance * smallest;
 
+          if(results[0] > smallest) {
+            results[0] = smallest;
+            pPoint.setColor(Color.RED);
+          } else if(results[0] < -smallest) {
+            results[0] = -smallest;
+            pPoint.setColor(Color.RED);
+          } else {
+            pPoint.setColor(Color.WHITE);
+          }
 
           x = (float) (Math.cos(angle) * results[0]);
           y = (float) (Math.sin(angle) * results[0]);
 
-          if (x + 5.0f >= smallest) {
+          /*if (x + 5.0f >= smallest) {
             x = smallest;
             float dist = (float) (x / Math.cos(angle));
             y = (float) (Math.sin(angle) * dist);
@@ -279,7 +296,7 @@ public class Compass extends View implements ILocationListener {
             y = -smallest;
             float dist = (float) (y / Math.sin(angle));
             x = (float) (Math.cos(angle) * dist);
-          }
+          }*/
 
           y = -y;
 

@@ -12,58 +12,61 @@
             android:layout_weight="1"/>
 
     <LinearLayout
-            android:orientation="horizontal"
-            android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:background="@drawable/component_border">
+            android:layout_height="wrap_content">
 
-        <TextView
+        <TableLayout
+                android:layout_height="wrap_content"
                 android:layout_width="0px"
                 android:layout_weight="1"
+                android:stretchColumns="1">
+            <TableRow>
+                <TextView android:text="@string/latitude" android:layout_marginRight="5dp"/>
+                <TextView
+                        android:id="@+id/tv_latitude"
+                        android:singleLine="true"/>
+            </TableRow>
+            <TableRow>
+                <TextView android:text="@string/longitude" android:layout_marginRight="5dp"/>
+                <TextView
+                        android:id="@+id/tv_longitude"
+                        android:singleLine="true"/>
+            </TableRow>
+            <TableRow>
+                <TextView android:text="@string/heading" android:layout_marginRight="5dp"/>
+
+                <TextView
+                        android:id="@+id/tv_heading"
+                        android:singleLine="true"/>
+            </TableRow>
+        </TableLayout>
+
+        <TableLayout
+                android:id="@+id/tl_point"
                 android:layout_height="wrap_content"
-                android:text="@string/latitude"/>
-
-        <TextView
-                android:id="@+id/tv_latitude"
-                android:layout_width="0px"
-                android:layout_weight="3"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:background="@drawable/component_border">
-
-        <TextView
                 android:layout_width="0px"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/longitude"/>
+                android:stretchColumns="1"
+                android:layout_marginLeft="10dp"
+                android:clickable="true">
+            <TableRow>
+                <TextView android:text="@string/point" android:layout_marginRight="5dp"/>
+                <TextView android:id="@+id/tv_point"/>
+            </TableRow>
+            <TableRow>
+                <TextView android:text="@string/distance" android:layout_marginRight="5dp"/>
+                <TextView
+                        android:id="@+id/tv_distance"
+                        android:singleLine="true"/>
+            </TableRow>
+            <TableRow>
+                <TextView android:text="@string/direction" android:layout_marginRight="5dp"/>
 
-        <TextView
-                android:id="@+id/tv_longitude"
-                android:layout_width="0px"
-                android:layout_weight="3"
-                android:layout_height="wrap_content"/>
-    </LinearLayout>
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:background="@drawable/component_border">
-
-        <TextView
-                android:layout_width="0px"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:text="@string/heading"/>
-
-        <TextView
-                android:id="@+id/tv_heading"
-                android:layout_width="0px"
-                android:layout_weight="3"
-                android:layout_height="wrap_content"/>
+                <TextView
+                        android:id="@+id/tv_direction"
+                        android:singleLine="true"/>
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
 
 </LinearLayout>
