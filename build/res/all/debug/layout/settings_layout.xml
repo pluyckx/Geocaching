@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:stretchColumns="0">
+
+    <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+        <TextView
+                style="@android:style/TextAppearance.Holo.Widget.ActionBar.Title"
+                android:background="@android:drawable/title_bar"
+                android:text="@string/set_cat_compass_interface"
+                android:singleLine="true"
+                android:layout_span="2"/>
+    </TableRow>
+
+
+    <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+                android:text="@string/set_compass_rotate"/>
+
+        <CheckBox
+                android:layout_gravity="right"
+                android:id="@+id/cb_compass_rotate"/>
+    </TableRow>
+
+    <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+                android:text="@string/set_compass_heading_line"/>
+
+        <CheckBox
+                android:layout_gravity="right"
+                android:id="@+id/cb_compass_heading_line"/>
+    </TableRow>
+
+    <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+                android:text="@string/set_outer_distance"/>
+
+        <EditText
+                android:minWidth="150dip"
+                android:id="@+id/et_outer_distance"
+                android:inputType="number"
+                android:gravity="right"/>
+        <TextView
+                android:text="m"/>
+    </TableRow>
+</TableLayout>

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+    <be.philipluyckx.geocaching.components.Compass
+            android:id="@+id/compass"
+            android:layout_width="match_parent"
+            android:layout_height="0px"
+            android:layout_weight="1"/>
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <TableLayout
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:stretchColumns="1">
+            <TableRow>
+                <TextView android:text="@string/latitude" android:layout_marginRight="5dp"/>
+                <TextView
+                        android:id="@+id/tv_latitude"
+                        android:singleLine="true"/>
+            </TableRow>
+            <TableRow>
+                <TextView android:text="@string/longitude" android:layout_marginRight="5dp"/>
+                <TextView
+                        android:id="@+id/tv_longitude"
+                        android:singleLine="true"/>
+            </TableRow>
+            <TableRow>
+                <TextView android:text="@string/heading" android:layout_marginRight="5dp"/>
+
+                <TextView
+                        android:id="@+id/tv_heading"
+                        android:singleLine="true"/>
+            </TableRow>
+        </TableLayout>
+
+        <TableLayout
+                android:id="@+id/tl_point"
+                android:layout_height="wrap_content"
+                android:layout_width="0px"
+                android:layout_weight="1"
+                android:stretchColumns="1"
+                android:layout_marginLeft="10dp"
+                android:clickable="true">
+            <TableRow>
+                <TextView android:text="@string/point" android:layout_marginRight="5dp"/>
+                <TextView android:id="@+id/tv_point"/>
+            </TableRow>
+            <TableRow>
+                <TextView android:text="@string/distance" android:layout_marginRight="5dp"/>
+                <TextView
+                        android:id="@+id/tv_distance"
+                        android:singleLine="true"/>
+            </TableRow>
+            <TableRow>
+                <TextView android:text="@string/direction" android:layout_marginRight="5dp"/>
+
+                <TextView
+                        android:id="@+id/tv_direction"
+                        android:singleLine="true"/>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+
+</LinearLayout>

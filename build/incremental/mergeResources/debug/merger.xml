@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger>
+
+    <dataSet config="main" >
+        <source path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res" >
+            <file
+                name="component_border"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable\component_border.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable-hdpi\ic_launcher.png"
+                qualifiers="hdpi"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable-mdpi\ic_launcher.png"
+                qualifiers="mdpi"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable-xhdpi\ic_launcher.png"
+                qualifiers="xhdpi"
+                type="drawable" />
+            <file
+                name="ic_launcher"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable-xxhdpi\ic_launcher.png"
+                qualifiers="xxhdpi"
+                type="drawable" />
+            <file
+                name="activity_main"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\activity_main.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="compass_layout"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\compass_layout.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="database_layout"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\database_layout.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="dialog_point"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\dialog_point.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="list_item_layout"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\list_item_layout.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="settings_layout"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\settings_layout.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="main"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\menu\main.xml"
+                qualifiers=""
+                type="menu" />
+            <file
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values\dimens.xml"
+                qualifiers="" >
+                <dimen name="activity_horizontal_margin" >16dp
+                </dimen>
+                <dimen name="activity_vertical_margin" >16dp
+                </dimen>
+            </file>
+            <file
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values\strings.xml"
+                qualifiers="" >
+                <string name="heading" >Heading
+                </string>
+
+                <string-array name="spinner_latitude" >
+                    <item>
+N
+                    </item>
+                    <item>
+S
+                    </item>
+                </string-array>
+
+                <string name="longitude" >Longitude
+                </string>
+                <string name="add_point" >Add Point
+                </string>
+                <string name="edit_point_dialog_add" >Add
+                </string>
+                <string name="edit_point_dialog_edit" >Edit
+                </string>
+                <string name="distance" >Distance
+                </string>
+                <string name="set_outer_distance" >Outer distance circle
+                </string>
+                <string name="set_compass_heading_line" >Draw heading direction
+                </string>
+                <string name="msg_remove_failed" >Couldn\'t remove \"{item}\".
+                </string>
+                <string name="point" >Point
+                </string>
+                <string name="set_cat_compass_interface" >Compass Interface
+                </string>
+                <string name="btn_remove" >Remove
+                </string>
+                <string name="msg_unknown_add_point_error" >Cannot add the point! An unknown error occurred. Check if the point do not already exist!
+                </string>
+                <string name="set_compass_heading_line_false" >Hide heading direction
+                </string>
+                <string name="set_compass_rotate_true" >Rotate compass to heading direction
+                </string>
+                <string name="msg_unknown_edit_point_error" >Cannot edit the point! An unknown error occurred. Check if the point do not already exist!
+                </string>
+                <string name="name" >Name
+                </string>
+                <string name="edit_point_dialog_title" >Edit Point
+                </string>
+                <string name="set_compass_rotate_false" >Do not rotate compass
+                </string>
+                <string name="set_compass_rotate" >Rotate compass
+                </string>
+                <string name="undo" >Undo
+                </string>
+                <string name="add_point_title" >Add Point
+                </string>
+                <string name="msg_edit_point_visibility_error" >Cannot change the visibility of the point!
+                </string>
+                <string name="msg_name_exists" >The name already exists!
+                </string>
+                <string name="remove_dialog_title" >Remove Point
+                </string>
+                <string name="latitude" >Latitude
+                </string>
+                <string name="btn_cancel" >Cancel
+                </string>
+                <string name="location" >Location
+                </string>
+                <string name="msg_remove_success" >\"{item}\" successful removed.
+                </string>
+                <string name="direction" >Direction
+                </string>
+                <string name="settings" >settings
+                </string>
+                <string name="save" >Save
+                </string>
+
+                <string-array name="spinner_longitude" >
+                    <item>
+E
+                    </item>
+                    <item>
+W
+                    </item>
+                </string-array>
+
+                <string name="visible" >Visible
+                </string>
+                <string name="set_compass_heading_line_true" >Show heading direction
+                </string>
+                <string name="app_name" >Geocaching
+                </string>
+                <string name="edit_point_dialog_cancel" >Cancel
+                </string>
+                <string name="msg_remove_point" >Are you sure to remove \"{item}\"?
+                </string>
+            </file>
+            <file
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values\styles.xml"
+                qualifiers="" >
+
+                <style
+                    name="ListviewHeader"
+                    parent="android:TextAppearance.Holo.Large" >
+                </style>
+
+                <style
+                    name="AppBaseTheme"
+                    parent="android:Theme.Holo" >
+
+                    <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+                    -->
+                </style>
+
+                <style
+                    name="LocationText"
+                    parent="android:TextAppearance.Holo.Medium" >
+                    <item name="android:typeface">
+monospace
+                    </item>
+                </style>
+
+                <style
+                    name="AppTheme"
+                    parent="AppBaseTheme" >
+
+                    <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+                </style>
+            </file>
+            <file
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values-sw600dp\dimens.xml"
+                qualifiers="sw600dp" />
+            <file
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values-sw720dp-land\dimens.xml"
+                qualifiers="sw720dp-land" >
+                <dimen name="activity_horizontal_margin" >128dp
+                </dimen>
+            </file>
+            <file
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values-v11\styles.xml"
+                qualifiers="v11" >
+
+                <style
+                    name="AppBaseTheme"
+                    parent="android:Theme.Holo" >
+
+                    <!-- API 11 theme customizations can go here. -->
+                </style>
+            </file>
+            <file
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\values-v14\styles.xml"
+                qualifiers="v14" >
+
+                <style
+                    name="AppBaseTheme"
+                    parent="android:Theme.Holo" >
+
+                    <!-- API 14 theme customizations can go here. -->
+                </style>
+            </file>
+            <file
+                name="settings"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\xml\settings.xml"
+                qualifiers=""
+                type="xml" />
+            <file
+                name="bottom_border"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable\bottom_border.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="dialog_select_information_point"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\dialog_select_information_point.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="select_point_item"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\layout\select_point_item.xml"
+                qualifiers=""
+                type="layout" />
+            <file
+                name="list_selector"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable\list_selector.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="list_selector_background_pressed"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable\list_selector_background_pressed.png"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="list_selector_selected"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable\list_selector_selected.xml"
+                qualifiers=""
+                type="drawable" />
+            <file
+                name="list_selector_pressed"
+                path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\main\res\drawable\list_selector_pressed.xml"
+                qualifiers=""
+                type="drawable" />
+        </source>
+        <source path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\build\res\rs\debug" />
+    </dataSet>
+    <dataSet config="debug" >
+        <source path="D:\Programmeren\Android\Projects\GeocachingProject\Geocaching\src\debug\res" />
+    </dataSet>
+
+</merger>
