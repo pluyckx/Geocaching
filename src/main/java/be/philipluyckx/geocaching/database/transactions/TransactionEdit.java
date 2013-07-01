@@ -27,6 +27,10 @@ public class TransactionEdit implements Transaction {
   }
 
   public boolean execute(SQLiteDatabase database) {
+    if(database == null) {
+      return false;
+    }
+
     ContentValues values = new ContentValues();
     values.put("name", newPoint.getName());
     values.put("latitude", newPoint.getLocation().latitude);

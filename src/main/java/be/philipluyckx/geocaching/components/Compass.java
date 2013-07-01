@@ -16,7 +16,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.text.DecimalFormat;
 
 import be.philipluyckx.geocaching.GeocachingApplication;
-import be.philipluyckx.geocaching.database.GeoDatabaseBuffer;
+import be.philipluyckx.geocaching.database.GeoDatabaseProxy;
 import be.philipluyckx.geocaching.datacomponents.GeoPoint;
 import be.philipluyckx.geocaching.fragments.SettingsFragment;
 import be.philipluyckx.geocaching.location.ILocationListener;
@@ -42,7 +42,7 @@ public class Compass extends View implements ILocationListener {
   private static final Paint pPointText = new Paint();
   private static float distanceBetweenTextCircle;
   private ScaleGestureDetector mScaleDetector;
-  private GeoDatabaseBuffer buffer;
+  private GeoDatabaseProxy buffer;
   private float mMaxDistance = 0;
   private String sMaxDistance;
   private String sHalfMaxDistance;
@@ -207,7 +207,7 @@ public class Compass extends View implements ILocationListener {
     canvas.translate(half_width, half_height);
 
     if (!isInEditMode()) {
-      GeoDatabaseBuffer db = GeocachingApplication.getApplication().getDatabaseBuffer();
+      GeoDatabaseProxy db = GeocachingApplication.getApplication().getDatabaseBuffer();
 
       if (!mTouching) {
         if (mRotateCompass) {

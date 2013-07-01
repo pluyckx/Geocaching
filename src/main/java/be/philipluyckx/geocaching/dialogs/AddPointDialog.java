@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 
 import be.philipluyckx.geocaching.R;
-import be.philipluyckx.geocaching.database.GeoDatabaseBuffer;
+import be.philipluyckx.geocaching.database.GeoDatabaseProxy;
 import be.philipluyckx.geocaching.datacomponents.GeoPoint;
 import be.philipluyckx.geocaching.utils.DegreeConverter;
 
@@ -38,9 +38,9 @@ public class AddPointDialog extends DialogFragment {
   private Spinner mLatitudeDirection;
   private Spinner mLongitudeDirection;
 
-  private GeoDatabaseBuffer mDbBuffer;
+  private GeoDatabaseProxy mDbBuffer;
 
-  public AddPointDialog(GeoDatabaseBuffer buffer, int title) {
+  public AddPointDialog(GeoDatabaseProxy buffer, int title) {
     Bundle args = new Bundle();
     args.putInt(ARG_TITLE, title);
     setArguments(args);
@@ -86,6 +86,22 @@ public class AddPointDialog extends DialogFragment {
     mLonDegree.addTextChangedListener(watcher);
     mLonMinutes.addTextChangedListener(watcher);
     mLonSeconds.addTextChangedListener(watcher);
+
+    final View.OnFocusChangeListener focusListener = new View.OnFocusChangeListener() {
+      @Override
+      public void onFocusChange(View view, boolean b) {
+        if(view instanceof  EditText) {
+          ((EditText) view).setSelection(mLatDegree.getText().length());
+        }
+      }
+    };
+
+    mLatDegree.setOnFocusChangeListener(focusListener);
+    mLatMinutes.setOnFocusChangeListener(focusListener);
+    mLatSeconds.setOnFocusChangeListener(focusListener);
+    mLonDegree.setOnFocusChangeListener(focusListener);
+    mLonMinutes.setOnFocusChangeListener(focusListener);
+    mLonSeconds.setOnFocusChangeListener(focusListener);
 
     mName.setNextFocusDownId(R.id.et_latitude_degree);
     mLatDegree.setNextFocusDownId(R.id.et_latitude_minutes);

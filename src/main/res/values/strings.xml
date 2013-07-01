@@ -12,7 +12,7 @@
     <string name="set_compass_heading_line_true">Show heading direction</string>
     <string name="set_compass_heading_line_false">Hide heading direction</string>
 
-    <string name="save">Save</string>
+    <string name="undo">Undo</string>
     <string name="add_point">Add Point</string>
     <string name="visible">Visible</string>
     <string name="name">Name</string>
@@ -25,6 +25,7 @@
     <string name="point">Point</string>
     <string name="distance">Distance</string>
     <string name="direction">Direction</string>
+    <string name="set_outer_distance">Outer distance circle</string>
 
     <string name="edit_point_dialog_title">Edit Point</string>
     <string name="edit_point_dialog_add">Add</string>

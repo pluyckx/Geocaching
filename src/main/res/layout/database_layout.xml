@@ -11,13 +11,12 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dip">
 
-        <Button
-                android:id="@+id/b_db_save"
+        <!--<Button
+                android:id="@+id/b_db_undo"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/save"
-                android:layout_column="0"
-                android:layout_weight="1"/>
+                android:text="@string/undo"
+                android:layout_weight="1"/>-->
 
         <Button
                 android:id="@+id/b_db_add_point"

@@ -26,6 +26,7 @@
                 android:text="@string/set_compass_rotate"/>
 
         <CheckBox
+                android:layout_gravity="right"
                 android:id="@+id/cb_compass_rotate"/>
     </TableRow>
 
@@ -36,6 +37,22 @@
                 android:text="@string/set_compass_heading_line"/>
 
         <CheckBox
+                android:layout_gravity="right"
                 android:id="@+id/cb_compass_heading_line"/>
+    </TableRow>
+
+    <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+                android:text="@string/set_outer_distance"/>
+
+        <EditText
+                android:minWidth="150dip"
+                android:id="@+id/et_outer_distance"
+                android:inputType="number"
+                android:gravity="right"/>
+        <TextView
+                android:text="m"/>
     </TableRow>
 </TableLayout>

@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="0"
                 android:layout_height="wrap_content"
-                android:text="&#x39;"/>
+                android:text="&#x27;"/>
 
         <EditText
                 android:id="@+id/et_latitude_seconds"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="0"
                 android:layout_height="wrap_content"
-                android:text="&#x34;"/>
+                android:text="&#x22;"/>
     </LinearLayout>
 
     <LinearLayout
@@ -110,7 +110,7 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="0"
                 android:layout_height="wrap_content"
-                android:text="&#x39;"/>
+                android:text="&#x27;"/>
 
         <EditText
                 android:id="@+id/et_longitude_seconds"
@@ -123,7 +123,7 @@
                 android:layout_width="wrap_content"
                 android:layout_weight="0"
                 android:layout_height="wrap_content"
-                android:text="&#x34;"/>
+                android:text="&#x22;"/>
     </LinearLayout>
 
     <LinearLayout

@@ -24,6 +24,10 @@ public class TransactionRemove implements Transaction {
   }
 
   public boolean execute(SQLiteDatabase database) {
+    if(database == null) {
+      return false;
+    }
+
     int ret = database.delete(DatabaseScheme.TABLE_GEO_POINTS, "id == ?", new String[] { Long.toString(point.getId() )});
     return (ret == 1);
   }

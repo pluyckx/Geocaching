@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.util.DisplayMetrics;
 
 import be.philipluyckx.geocaching.database.GeoDatabase;
-import be.philipluyckx.geocaching.database.GeoDatabaseBuffer;
+import be.philipluyckx.geocaching.database.GeoDatabaseProxy;
 import be.philipluyckx.geocaching.location.LocationManager;
 
 /**
@@ -15,7 +15,7 @@ import be.philipluyckx.geocaching.location.LocationManager;
 public class GeocachingApplication extends Application {
   private static GeocachingApplication app;
 
-  private GeoDatabaseBuffer buffer = null;
+  private GeoDatabaseProxy buffer = null;
   private DisplayMetrics mDisplayMetrics;
   private LocationManager mLocationManager;
   private SharedPreferences mPreferences;
@@ -44,9 +44,9 @@ public class GeocachingApplication extends Application {
     return mPreferences;
   }
 
-  public GeoDatabaseBuffer getDatabaseBuffer() {
+  public GeoDatabaseProxy getDatabaseBuffer() {
     if(buffer == null) {
-      buffer = new GeoDatabaseBuffer(new GeoDatabase(getApplicationContext()));
+      buffer = new GeoDatabaseProxy(new GeoDatabase(getApplicationContext()));
     }
 
     return buffer;

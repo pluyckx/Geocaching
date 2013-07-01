@@ -15,7 +15,7 @@ import android.widget.Toast;
 import be.philipluyckx.geocaching.GeocachingApplication;
 import be.philipluyckx.geocaching.R;
 import be.philipluyckx.geocaching.components.ListItemView;
-import be.philipluyckx.geocaching.database.GeoDatabaseBuffer;
+import be.philipluyckx.geocaching.database.GeoDatabaseProxy;
 import be.philipluyckx.geocaching.datacomponents.GeoPoint;
 import be.philipluyckx.geocaching.datacomponents.GeopointAdapter;
 import be.philipluyckx.geocaching.dialogs.AddPointDialog;
@@ -28,7 +28,6 @@ public class DatabaseFragment extends Fragment {
 
   private ListView mListView;
   private Button mAddPoint;
-  private Button mSave;
   private OnLongClickListener mLongClickListener;
   private OnClickListener mClickListener;
 
@@ -56,18 +55,10 @@ public class DatabaseFragment extends Fragment {
       }
     });
 
-    mSave = (Button) view.findViewById(R.id.b_db_save);
-    mSave.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        ((GeocachingApplication) getActivity().getApplication()).getDatabaseBuffer().save();
-      }
-    });
-
     return view;
   }
 
-  private void onShowAddPointDialog(GeoDatabaseBuffer buffer) {
+  private void onShowAddPointDialog(GeoDatabaseProxy buffer) {
     DialogFragment dialog = new AddPointDialog(buffer, R.string.add_point_title);
     dialog.show(getFragmentManager(), "dialog");
   }

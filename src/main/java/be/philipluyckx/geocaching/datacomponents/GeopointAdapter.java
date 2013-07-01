@@ -11,23 +11,23 @@ import java.util.Observer;
 
 import be.philipluyckx.geocaching.R;
 import be.philipluyckx.geocaching.components.ListItemView;
-import be.philipluyckx.geocaching.database.GeoDatabaseBuffer;
+import be.philipluyckx.geocaching.database.GeoDatabaseProxy;
 
 /**
  * Created by Philip on 24/06/13.
  */
 public class GeopointAdapter extends BaseAdapter implements Observer {
 
-  private GeoDatabaseBuffer mDatabaseBuffer;
+  private GeoDatabaseProxy mDatabaseProxy;
   private Context context;
   private View.OnLongClickListener mLongClickListener;
   private View.OnClickListener mClickListener;
 
-  public GeopointAdapter(Context context, GeoDatabaseBuffer databaseBuffer, View.OnLongClickListener longClickListener, View.OnClickListener clickListener) {
+  public GeopointAdapter(Context context, GeoDatabaseProxy databaseBuffer, View.OnLongClickListener longClickListener, View.OnClickListener clickListener) {
     super();
 
     this.context = context;
-    this.mDatabaseBuffer = databaseBuffer;
+    this.mDatabaseProxy = databaseBuffer;
     databaseBuffer.addObserver(this);
 
     mClickListener = clickListener;
@@ -40,12 +40,12 @@ public class GeopointAdapter extends BaseAdapter implements Observer {
   }
   @Override
   public int getCount() {
-    return mDatabaseBuffer.size();
+    return mDatabaseProxy.size();
   }
 
   @Override
   public Object getItem(int i) {
-    return mDatabaseBuffer.getPoint(i);
+    return mDatabaseProxy.getPoint(i);
   }
 
   @Override
@@ -65,7 +65,7 @@ public class GeopointAdapter extends BaseAdapter implements Observer {
     }
 
     ListItemView liv = (ListItemView)view;
-    liv.setPoint(mDatabaseBuffer.getPoint(i));
+    liv.setPoint(mDatabaseProxy.getPoint(i));
 
     return liv;
   }

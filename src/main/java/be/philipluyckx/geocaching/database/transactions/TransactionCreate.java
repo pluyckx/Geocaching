@@ -26,6 +26,10 @@ public class TransactionCreate implements Transaction {
   }
 
   public boolean execute(SQLiteDatabase database) {
+    if(database == null) {
+      return false;
+    }
+
     ContentValues values = new ContentValues();
     values.put("name", point.getName());
     values.put("latitude", point.getLocation().latitude);

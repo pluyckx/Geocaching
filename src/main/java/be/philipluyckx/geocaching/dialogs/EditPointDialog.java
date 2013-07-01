@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.google.android.gms.maps.model.LatLng;
 
 import be.philipluyckx.geocaching.R;
-import be.philipluyckx.geocaching.database.GeoDatabaseBuffer;
+import be.philipluyckx.geocaching.database.GeoDatabaseProxy;
 import be.philipluyckx.geocaching.datacomponents.GeoPoint;
 import be.philipluyckx.geocaching.utils.DegreeConverter;
 
@@ -40,10 +40,10 @@ public class EditPointDialog extends DialogFragment {
   private EditText mLonMinutes;
   private EditText mLonSeconds;
   private TextView mStatus;
-  private GeoDatabaseBuffer mDbBuffer;
+  private GeoDatabaseProxy mDbBuffer;
   private GeoPoint mEditPoint;
 
-  public EditPointDialog(GeoDatabaseBuffer buffer, int title, GeoPoint point) {
+  public EditPointDialog(GeoDatabaseProxy buffer, int title, GeoPoint point) {
     Bundle args = new Bundle();
     args.putInt(ARG_TITLE, title);
     setArguments(args);

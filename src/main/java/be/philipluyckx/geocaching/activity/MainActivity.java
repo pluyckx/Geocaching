@@ -13,7 +13,7 @@ import be.philipluyckx.geocaching.R;
 import be.philipluyckx.geocaching.fragments.CompassFragment;
 import be.philipluyckx.geocaching.fragments.DatabaseFragment;
 import be.philipluyckx.geocaching.fragments.SettingsFragment;
-import be.philipluyckx.geocaching.database.GeoDatabaseBuffer;
+import be.philipluyckx.geocaching.database.GeoDatabaseProxy;
 import be.philipluyckx.geocaching.datacomponents.GeoPoint;
 
 public class MainActivity extends FragmentActivity {
@@ -27,7 +27,7 @@ public class MainActivity extends FragmentActivity {
       }
     }
   };
-  private GeoDatabaseBuffer buffer;
+  private GeoDatabaseProxy buffer;
   private FragmentTabHost mTabHost;
 
   @Override
