@@ -12,10 +12,11 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
+
 import be.philipluyckx.geocaching.GeocachingApplication;
 import be.philipluyckx.geocaching.R;
 import be.philipluyckx.geocaching.components.ListItemView;
-import be.philipluyckx.geocaching.database.GeoDatabaseProxy;
 import be.philipluyckx.geocaching.datacomponents.GeoPoint;
 import be.philipluyckx.geocaching.datacomponents.GeopointAdapter;
 import be.philipluyckx.geocaching.dialogs.AddPointDialog;
@@ -28,6 +29,7 @@ public class DatabaseFragment extends Fragment {
 
   private ListView mListView;
   private Button mAddPoint;
+  private Button mAddCurrentPosition;
   private OnLongClickListener mLongClickListener;
   private OnClickListener mClickListener;
 
@@ -51,15 +53,36 @@ public class DatabaseFragment extends Fragment {
     mAddPoint.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View v) {
-        onShowAddPointDialog(((GeocachingApplication) getActivity().getApplication()).getDatabaseBuffer());
+        onShowAddPointDialog();
+      }
+    });
+
+    mAddCurrentPosition = (Button)view.findViewById(R.id.b_add_current_position);
+    mAddCurrentPosition.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+        LatLng loc = GeocachingApplication.getApplication().getLocationManager().getLocation();
+        onShowAddPointDialog(loc);
       }
     });
 
     return view;
   }
 
-  private void onShowAddPointDialog(GeoDatabaseProxy buffer) {
-    DialogFragment dialog = new AddPointDialog(buffer, R.string.add_point_title);
+
+  private void onShowAddPointDialog() {
+   onShowAddPointDialog(null);
+  }
+
+  private void onShowAddPointDialog(LatLng loc) {
+    DialogFragment dialog = new AddPointDialog(GeocachingApplication.getApplication().getDatabaseBuffer(), R.string.add_point_title, loc);
+    dialog.show(getFragmentManager(), "dialog");
+  }
+
+  private void onShowEditPointDialog(GeoPoint editPoint) {
+    DialogFragment dialog = new EditPointDialog(GeocachingApplication.getApplication().getDatabaseBuffer(),
+            R.string.edit_point_dialog_title,
+            editPoint);
     dialog.show(getFragmentManager(), "dialog");
   }
 
@@ -104,10 +127,7 @@ public class DatabaseFragment extends Fragment {
       if(v instanceof ListItemView) {
         ListItemView liv = (ListItemView) v;
 
-        DialogFragment dialog = new EditPointDialog(((GeocachingApplication) getActivity().getApplication()).getDatabaseBuffer(),
-                R.string.edit_point_dialog_title,
-                liv.getPoint());
-        dialog.show(getFragmentManager(), "dialog");
+        onShowEditPointDialog(liv.getPoint());
       }
     }
   }

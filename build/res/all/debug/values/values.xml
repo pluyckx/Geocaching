@@ -13,6 +13,7 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
 
+    <string name="add_current_position">Add Current Position</string>
     <string name="add_point">Add Point</string>
     <string name="add_point_title">Add Point</string>
     <string name="app_name">Geocaching</string>
@@ -45,6 +46,7 @@
     <string name="set_compass_rotate">Rotate compass</string>
     <string name="set_compass_rotate_false">Do not rotate compass</string>
     <string name="set_compass_rotate_true">Rotate compass to heading direction</string>
+    <string name="set_loc_update_speed">Location update speed</string>
     <string name="set_outer_distance">Outer distance circle</string>
     <string name="settings">settings</string>
     <string name="undo">Undo</string>

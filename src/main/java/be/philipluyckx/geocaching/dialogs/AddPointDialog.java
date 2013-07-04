@@ -38,13 +38,15 @@ public class AddPointDialog extends DialogFragment {
   private Spinner mLatitudeDirection;
   private Spinner mLongitudeDirection;
   private GeoDatabaseProxy mDbBuffer;
+  private LatLng mInitLocation;
 
-  public AddPointDialog(GeoDatabaseProxy buffer, int title) {
+  public AddPointDialog(GeoDatabaseProxy buffer, int title, LatLng loc) {
     Bundle args = new Bundle();
     args.putInt(ARG_TITLE, title);
     setArguments(args);
 
     mDbBuffer = buffer;
+    mInitLocation = loc;
   }
 
   @Override
@@ -69,12 +71,25 @@ public class AddPointDialog extends DialogFragment {
     mLonMinutes = (EditText) v.findViewById(R.id.et_longitude_minutes);
     mLonSeconds = (EditText) v.findViewById(R.id.et_longitude_seconds);
 
-    mLatDegree.setText("0");
-    mLatMinutes.setText("0");
-    mLatSeconds.setText("0");
-    mLonDegree.setText("0");
-    mLonMinutes.setText("0");
-    mLonSeconds.setText("0");
+    String parts[] = new String[3];
+
+    if (mInitLocation != null) {
+      DegreeConverter.toStringParts(mInitLocation.latitude, parts);
+    } else {
+      parts[0] = "0";
+      parts[1] = "0";
+      parts[2] = "0";
+    }
+    mLatDegree.setText(parts[0]);
+    mLatMinutes.setText(parts[1]);
+    mLatSeconds.setText(parts[2]);
+
+    if (mInitLocation != null) {
+      DegreeConverter.toStringParts(mInitLocation.longitude, parts);
+    }
+    mLonDegree.setText(parts[0]);
+    mLonMinutes.setText(parts[1]);
+    mLonSeconds.setText(parts[2]);
 
     mStatus = (TextView) v.findViewById(R.id.tv_status);
 

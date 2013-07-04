@@ -55,4 +55,19 @@
         <TextView
                 android:text="m"/>
     </TableRow>
+
+    <TableRow
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+        <TextView
+                android:text="@string/set_loc_update_speed"/>
+
+        <EditText
+                android:minWidth="100dip"
+                android:id="@+id/et_loc_update_speed"
+                android:inputType="number"
+                android:gravity="right"/>
+        <TextView
+                android:text="ms"/>
+    </TableRow>
 </TableLayout>

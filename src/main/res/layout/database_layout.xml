@@ -5,26 +5,24 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-    <LinearLayout
+    <!--<LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dip">
-
-        <!--<Button
-                android:id="@+id/b_db_undo"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/undo"
-                android:layout_weight="1"/>-->
+            android:layout_marginBottom="5dip">-->
 
         <Button
                 android:id="@+id/b_db_add_point"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/add_point"
-                android:layout_weight="1"/>
-    </LinearLayout>
+                android:text="@string/add_point"/>
+
+        <Button
+                android:id="@+id/b_add_current_position"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/add_current_position"/>
+    <!--</LinearLayout>-->
 
     <LinearLayout
         android:orientation="horizontal"

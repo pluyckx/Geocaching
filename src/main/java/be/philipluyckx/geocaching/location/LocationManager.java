@@ -8,6 +8,7 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import be.philipluyckx.geocaching.GeocachingApplication;
+import be.philipluyckx.geocaching.fragments.SettingsFragment;
 
 /**
  * Created by pluyckx on 6/26/13.
@@ -47,7 +49,16 @@ public class LocationManager implements LocationListener, SensorEventListener {
   }
 
   public void startListening() {
-    mManager.requestLocationUpdates(android.location.LocationManager.GPS_PROVIDER, 5000, 10, this);
+    long gpsUpdateSpeed;
+
+    try {
+      gpsUpdateSpeed = Long.parseLong(GeocachingApplication.getApplication().getPreferences().getString(SettingsFragment.PREF_LOC_UPDATE_SPEED, "2000"));
+    } catch(RuntimeException ex) {
+      gpsUpdateSpeed = 2000;
+      Toast.makeText(GeocachingApplication.getApplication().getApplicationContext(), ex.getMessage(), Toast.LENGTH_LONG);
+    }
+
+    mManager.requestLocationUpdates(android.location.LocationManager.GPS_PROVIDER, gpsUpdateSpeed, 0, this);
     mSensorManager.registerListener(this, mAccelerometer, 5000000);
     mSensorManager.registerListener(this, mMagneticField, 5000000);
   }

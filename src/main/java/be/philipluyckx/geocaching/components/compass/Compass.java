@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -50,6 +51,10 @@ public class Compass extends View implements ILocationListener, Observer {
   private float mMaxDistance = 0;
   private String sMaxDistance;
   private String sHalfMaxDistance;
+  private float mMaxDistanceWidth;
+  private float mMaxDistanceHeight;
+  private float mHalfMaxDistanceWidth;
+  private float mHalfMaxDistanceHeight;
   private LatLng mPosition;
   private Smoother orientation;
   private double mRotate = 0.0;
@@ -97,6 +102,7 @@ public class Compass extends View implements ILocationListener, Observer {
   }
 
   public void initialize() {
+    reloadSettings();
     mScaleDetector = new ScaleGestureDetector(context, new ScaleListener());
     orientation = new Smoother(0.0, 0.5);
 
@@ -106,7 +112,14 @@ public class Compass extends View implements ILocationListener, Observer {
 
     SHORT_DISTANCE_PX = 25.0f * GeocachingApplication.getApplication().getDisplayMetrics().density;
 
-    setMaxDistance(1000);
+    Rect bounds = new Rect();
+    pDistanceText.getTextBounds(sMaxDistance, 0, sMaxDistance.length(), bounds);
+    mMaxDistanceWidth = bounds.width();
+    mHalfMaxDistanceHeight = bounds.height();
+
+    pDistanceText.getTextBounds(sHalfMaxDistance, 0, sHalfMaxDistance.length(), bounds);
+    mHalfMaxDistanceWidth = bounds.width();
+    mHalfMaxDistanceHeight = bounds.height();
 
     GeocachingApplication.getApplication().getLocationManager().addListener(this);
 
@@ -172,6 +185,14 @@ public class Compass extends View implements ILocationListener, Observer {
   public void reloadSettings() {
     mRotateCompass = GeocachingApplication.getApplication().getPreferences().getBoolean(SettingsFragment.PREF_ROTATE_COMPASS, true);
     mDrawHeadingLine = GeocachingApplication.getApplication().getPreferences().getBoolean(SettingsFragment.PREF_DRAW_HEADING_LINE, true);
+    String tmp = GeocachingApplication.getApplication().getPreferences().getString(SettingsFragment.PREF_OUTER_DISTANCE, "1000.0");
+
+    try {
+      setMaxDistance(Float.parseFloat(tmp));
+    } catch (RuntimeException ex) {
+      Toast.makeText(this.context, ex.getMessage(), Toast.LENGTH_LONG);
+      setMaxDistance(1000.0f);
+    }
 
     invalidate();
   }
@@ -263,7 +284,6 @@ public class Compass extends View implements ILocationListener, Observer {
     float x, y;
     double rotateAngle = 0.0;
     double angle;
-    Rect bounds = new Rect();
     canvas.translate(half_width, half_height);
 
     if (!isInEditMode()) {
@@ -296,8 +316,7 @@ public class Compass extends View implements ILocationListener, Observer {
       if (height > width) {
         y = -smallest / 2.0f - distanceBetweenTextCircle;
       } else {
-        pDistanceText.getTextBounds(sHalfMaxDistance, 0, sHalfMaxDistance.length(), bounds);
-        y = -smallest / 2.0f + distanceBetweenTextCircle + bounds.height();
+        y = -smallest / 2.0f + distanceBetweenTextCircle + mHalfMaxDistanceHeight;
       }
 
       canvas.drawText(sHalfMaxDistance, x, y, pDistanceText);
@@ -305,8 +324,7 @@ public class Compass extends View implements ILocationListener, Observer {
       if (height > width) {
         y = -smallest - distanceBetweenTextCircle;
       } else {
-        pDistanceText.getTextBounds(sHalfMaxDistance, 0, sMaxDistance.length(), bounds);
-        y = -smallest + distanceBetweenTextCircle + bounds.height();
+        y = -smallest + distanceBetweenTextCircle + mMaxDistanceHeight;
       }
 
       canvas.drawText(sMaxDistance, x, y, pDistanceText);
@@ -317,7 +335,7 @@ public class Compass extends View implements ILocationListener, Observer {
       for (CompassPoint p : mPoints) {
         p.draw(canvas, smallest, mMaxDistance, mPosition);
       }
-      if(mSelectedPoint != null) {
+      if (mSelectedPoint != null) {
         mSelectedPoint.draw(canvas, smallest, mMaxDistance, mPosition);
       }
     } else {

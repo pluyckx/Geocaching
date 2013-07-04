@@ -14,6 +14,7 @@
 
     <string name="undo">Undo</string>
     <string name="add_point">Add Point</string>
+    <string name="add_current_position">Add Current Position</string>
     <string name="visible">Visible</string>
     <string name="name">Name</string>
     <string name="location">Location</string>
@@ -26,6 +27,7 @@
     <string name="distance">Distance</string>
     <string name="direction">Direction</string>
     <string name="set_outer_distance">Outer distance circle</string>
+    <string name="set_loc_update_speed">Location update speed</string>
 
     <string name="edit_point_dialog_title">Edit Point</string>
     <string name="edit_point_dialog_add">Add</string>
