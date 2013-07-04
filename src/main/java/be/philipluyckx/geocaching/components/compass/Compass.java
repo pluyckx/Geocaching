@@ -5,7 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.location.Location;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
@@ -14,6 +14,10 @@ import android.view.View;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import be.philipluyckx.geocaching.GeocachingApplication;
 import be.philipluyckx.geocaching.database.GeoDatabaseProxy;
@@ -32,15 +36,15 @@ import be.philipluyckx.geocaching.location.ILocationListener;
 /**
  * Created by pluyckx on 6/26/13.
  */
-public class Compass extends View implements ILocationListener {
+public class Compass extends View implements ILocationListener, Observer {
   private static final DecimalFormat mDistanceFormatter = new DecimalFormat("#.0m");
   private static final Paint pPosition = new Paint();
   private static final Paint pCircle = new Paint();
-  private static final Paint pPoint = new Paint();
   private static final Paint pDirection = new Paint();
   private static final Paint pDistanceText = new Paint();
-  private static final Paint pPointText = new Paint();
-  private static float distanceBetweenTextCircle;
+  public static float distanceBetweenTextCircle;
+  private static float SHORT_DISTANCE_PX;
+  public SelectionListener mSelectionListener = null;
   private ScaleGestureDetector mScaleDetector;
   private GeoDatabaseProxy buffer;
   private float mMaxDistance = 0;
@@ -55,15 +59,15 @@ public class Compass extends View implements ILocationListener {
   private boolean mDrawHeadingLine;
   private LocationListener locationListener = null;
   private HeadingListener headingListener = null;
+  private List<CompassPoint> mPoints;
+  private CompassPoint mSelectedPoint = null;
+  private long mStartTouch = -1;
 
   static {
     pPosition.setColor(Color.WHITE);
     pPosition.setStyle(Paint.Style.STROKE);
     pPosition.setStrokeWidth(2.0f);
 
-    pPoint.setColor(Color.WHITE);
-    pPoint.setStyle(Paint.Style.FILL);
-    pPoint.setStrokeWidth(1.0f);
 
     pCircle.setColor(Color.WHITE);
     pCircle.setStyle(Paint.Style.STROKE);
@@ -75,9 +79,6 @@ public class Compass extends View implements ILocationListener {
 
     pDistanceText.setColor(Color.DKGRAY);
     pDistanceText.setTextAlign(Paint.Align.CENTER);
-
-    pPointText.setColor(Color.DKGRAY);
-    pPointText.setTextAlign(Paint.Align.CENTER);
   }
 
   public Compass(Context context) {
@@ -100,13 +101,20 @@ public class Compass extends View implements ILocationListener {
     orientation = new Smoother(0.0, 0.5);
 
     pDistanceText.setTextSize(13 * GeocachingApplication.getApplication().getDisplayMetrics().scaledDensity);
-    pPointText.setTextSize(13 * GeocachingApplication.getApplication().getDisplayMetrics().scaledDensity);
 
     distanceBetweenTextCircle = 5.0f * GeocachingApplication.getApplication().getDisplayMetrics().density;
+
+    SHORT_DISTANCE_PX = 25.0f * GeocachingApplication.getApplication().getDisplayMetrics().density;
 
     setMaxDistance(1000);
 
     GeocachingApplication.getApplication().getLocationManager().addListener(this);
+
+    mPoints = new ArrayList<CompassPoint>();
+    for (GeoPoint p : GeocachingApplication.getApplication().getDatabaseBuffer()) {
+      mPoints.add(new CompassPoint(p, false));
+    }
+    GeocachingApplication.getApplication().getDatabaseBuffer().addObserver(this);
   }
 
   public LocationListener setLocationListener(LocationListener listener) {
@@ -116,6 +124,40 @@ public class Compass extends View implements ILocationListener {
     locationListener.onLocationChanged(mPosition.latitude, mPosition.longitude);
 
     return prev;
+  }
+
+  public SelectionListener setSelectionListener(SelectionListener listener) {
+    SelectionListener prev = mSelectionListener;
+    mSelectionListener = listener;
+
+    return prev;
+  }
+
+  private List<GeoPoint> findClosePoints(float x, float y) {
+    RectF validArea = new RectF(x - SHORT_DISTANCE_PX, y - SHORT_DISTANCE_PX, x + SHORT_DISTANCE_PX, y + SHORT_DISTANCE_PX);
+
+    List<GeoPoint> points = new ArrayList<GeoPoint>();
+    for (CompassPoint cp : mPoints) {
+      if (validArea.contains(cp.getX(), cp.getY())) {
+        points.add(cp.getPoint());
+      }
+    }
+
+    return points;
+  }
+
+  public void setSelectedPoint(GeoPoint point) {
+    if (mSelectedPoint != null) {
+      mSelectedPoint.isSelected(false);
+    }
+    if (point != null) {
+      CompassPoint cp = new CompassPoint(point, false);
+      int index = mPoints.indexOf(cp);
+      if (index >= 0) {
+        mSelectedPoint = mPoints.get(index);
+        mSelectedPoint.isSelected(true);
+      }
+    }
   }
 
   public HeadingListener setHeadingListener(HeadingListener listener) {
@@ -147,6 +189,7 @@ public class Compass extends View implements ILocationListener {
     mScaleDetector.onTouchEvent(event);
     if (event.getPointerCount() == 1 && event.getAction() == MotionEvent.ACTION_UP) {
       mTouching = false;
+      mStartTouch = -1;
     } else if (event.getPointerCount() == 1) {
       float x = event.getX();
       float y = event.getY();
@@ -157,8 +200,24 @@ public class Compass extends View implements ILocationListener {
       x -= half_width;
       y -= half_height;
 
-      mRotate = Math.PI / 2.0 - Math.atan2(y, x) + Math.PI;
-      mTouching = true;
+      if (mStartTouch > -1 && System.currentTimeMillis() - mStartTouch > 2000) {
+
+        mRotate = Math.PI / 2.0 - Math.atan2(y, x) + Math.PI;
+        mTouching = true;
+      } else if (mStartTouch == -1 && !mRotateCompass) {
+        mStartTouch = System.currentTimeMillis();
+
+        List<GeoPoint> points = findClosePoints(x, y);
+        if (points.size() == 1) {
+          if (mSelectionListener != null) {
+            mSelectionListener.onSelectionChanged(points.get(0));
+          }
+        } else if (points.size() > 1) {
+          if (mSelectionListener != null) {
+            mSelectionListener.onMultipleSelectionPossible(points);
+          }
+        }
+      }
     }
 
     return true;
@@ -183,6 +242,7 @@ public class Compass extends View implements ILocationListener {
 
   /**
    * Returns the current smoothed heading in radians
+   *
    * @return Heading in radians
    */
   public double getHeading() {
@@ -254,68 +314,11 @@ public class Compass extends View implements ILocationListener {
       // draw points
       float results[] = new float[1];
 
-      for (GeoPoint p : db) {
-        if (p.isVisible()) {
-          Location.distanceBetween(mPosition.latitude, mPosition.longitude,
-                  p.getLocation().latitude, p.getLocation().longitude,
-                  results);
-
-          angle = Math.atan2(p.getLocation().latitude - mPosition.latitude,
-                  p.getLocation().longitude - mPosition.longitude);
-
-          results[0] = results[0] / mMaxDistance * smallest;
-
-          if(results[0] > smallest) {
-            results[0] = smallest;
-            pPoint.setColor(Color.RED);
-          } else if(results[0] < -smallest) {
-            results[0] = -smallest;
-            pPoint.setColor(Color.RED);
-          } else {
-            pPoint.setColor(Color.WHITE);
-          }
-
-          x = (float) (Math.cos(angle) * results[0]);
-          y = (float) (Math.sin(angle) * results[0]);
-
-          /*if (x + 5.0f >= smallest) {
-            x = smallest;
-            float dist = (float) (x / Math.cos(angle));
-            y = (float) (Math.sin(angle) * dist);
-          } else if (x - 5.0f <= -smallest) {
-            x = -smallest;
-            float dist = (float) (x / Math.cos(angle));
-            y = (float) (Math.sin(angle) * dist);
-          }
-
-          if (y >= smallest) {
-            y = smallest;
-            float dist = (float) (y / Math.sin(angle));
-            x = (float) (Math.cos(angle) * dist);
-          } else if (y <= -smallest) {
-            y = -smallest;
-            float dist = (float) (y / Math.sin(angle));
-            x = (float) (Math.cos(angle) * dist);
-          }*/
-
-          y = -y;
-
-          canvas.drawCircle(x, y, 10.0f, pPoint);
-
-          pPointText.getTextBounds(p.getName(), 0, p.getName().length(), bounds);
-          y += distanceBetweenTextCircle + bounds.height();
-          if (x + bounds.width() / 2.0f > half_width) {
-            x = half_width - bounds.width() / 2.0f - 10.0f - distanceBetweenTextCircle;
-          } else if (x - bounds.width() / 2.0f < -half_width) {
-            x = -half_width + bounds.width() / 2.0f + 10.0f + distanceBetweenTextCircle;
-          }
-
-          if (y > half_height) {
-            y = half_height - bounds.height() - distanceBetweenTextCircle;
-          }
-
-          canvas.drawText(p.getName(), x, y, pPointText);
-        }
+      for (CompassPoint p : mPoints) {
+        p.draw(canvas, smallest, mMaxDistance, mPosition);
+      }
+      if(mSelectedPoint != null) {
+        mSelectedPoint.draw(canvas, smallest, mMaxDistance, mPosition);
       }
     } else {
 // draw heading line
@@ -354,12 +357,39 @@ public class Compass extends View implements ILocationListener {
     }
   }
 
+  @Override
+  public void update(Observable observable, Object o) {
+    if (observable.equals(mPoints)) {
+      GeoDatabaseProxy.GeoDatabaseChange change = (GeoDatabaseProxy.GeoDatabaseChange) o;
+
+      switch (change.getType()) {
+        case GeoDatabaseProxy.GeoDatabaseChange.TYPE_ADD:
+          mPoints.add(new CompassPoint(change.getPoint()[0], false));
+          break;
+        case GeoDatabaseProxy.GeoDatabaseChange.TYPE_REMOVE:
+          mPoints.remove(new CompassPoint(change.getPoint()[0], false));
+          break;
+        case GeoDatabaseProxy.GeoDatabaseChange.TYPE_REMOVE_ALL:
+          mPoints.clear();
+          break;
+      }
+
+      invalidate();
+    }
+  }
+
   public interface LocationListener {
     public void onLocationChanged(double latitude, double longitude);
   }
 
   public interface HeadingListener {
     public void onHeadingChanged(double heading);
+  }
+
+  public interface SelectionListener {
+    public void onSelectionChanged(GeoPoint point);
+
+    public void onMultipleSelectionPossible(List<GeoPoint> points);
   }
 
   private class ScaleListener extends ScaleGestureDetector.SimpleOnScaleGestureListener {

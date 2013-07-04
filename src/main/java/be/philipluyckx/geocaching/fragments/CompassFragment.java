@@ -1,5 +1,6 @@
 package be.philipluyckx.geocaching.fragments;
 
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,9 +14,11 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.util.List;
+
 import be.philipluyckx.geocaching.GeocachingApplication;
 import be.philipluyckx.geocaching.R;
-import be.philipluyckx.geocaching.components.Compass;
+import be.philipluyckx.geocaching.components.compass.Compass;
 import be.philipluyckx.geocaching.datacomponents.GeoPoint;
 import be.philipluyckx.geocaching.dialogs.SelectInformationPointDialog;
 import be.philipluyckx.geocaching.utils.DegreeConverter;
@@ -36,6 +39,7 @@ public class CompassFragment extends Fragment {
   private static final String KEY_LATITUDE = "latitude";
   private static final String KEY_LONGITUDE = "longitude";
   private static final String KEY_HEADING = "heading";
+  private static final String KEY_SELECTED = "selected";
   private static Handler mUpdater = new Handler() {
     @Override
     public void handleMessage(Message msg) {
@@ -55,7 +59,6 @@ public class CompassFragment extends Fragment {
       }
     }
   };
-
   private TableLayout mPointInformation;
   private Compass mCompass;
   private TextView mLatitude;
@@ -70,6 +73,16 @@ public class CompassFragment extends Fragment {
     super.onResume();
 
     mCompass.reloadSettings();
+    setSelectedPoint(GeocachingApplication.getApplication().getPreferences().getString(KEY_SELECTED, null));
+  }
+
+  @Override
+  public void onPause() {
+    SharedPreferences.Editor editor = GeocachingApplication.getApplication().getPreferences().edit();
+    editor.putString(KEY_SELECTED, mPoint.getText().toString());
+    editor.commit();
+
+    super.onPause();
   }
 
   @Override
@@ -83,7 +96,7 @@ public class CompassFragment extends Fragment {
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.compass_layout, container, false);
 
-    mPointInformation = (TableLayout)view.findViewById(R.id.tl_point);
+    mPointInformation = (TableLayout) view.findViewById(R.id.tl_point);
     mPointInformation.setOnClickListener(new View.OnClickListener() {
       @Override
       public void onClick(View view) {
@@ -92,6 +105,17 @@ public class CompassFragment extends Fragment {
     });
 
     mCompass = (Compass) view.findViewById(R.id.compass);
+    mCompass.setSelectionListener(new Compass.SelectionListener() {
+      @Override
+      public void onSelectionChanged(GeoPoint point) {
+        setSelectedPoint(point.getName());
+      }
+
+      @Override
+      public void onMultipleSelectionPossible(List<GeoPoint> points) {
+        onSelectPoint(points);
+      }
+    });
     mCompass.initialize();
 
     mLatitude = (TextView) view.findViewById(R.id.tv_latitude);
@@ -108,15 +132,23 @@ public class CompassFragment extends Fragment {
 
     GeoPoint p = GeocachingApplication.getApplication().getDatabaseBuffer().getPoint(0);
     if (p != null) {
-      mPoint.setText(p.getName());
+      setSelectedPoint(p.getName());
     }
 
     return view;
   }
 
   public void setSelectedPoint(String point) {
-    mPoint.setText(point);
-    updatePointInformation();
+    if (point == null) {
+      mPoint.setText("");
+      updatePointInformation();
+      mCompass.setSelectedPoint(null);
+    } else {
+      mPoint.setText(point);
+      updatePointInformation();
+
+      mCompass.setSelectedPoint(GeocachingApplication.getApplication().getDatabaseBuffer().getPoint(point));
+    }
   }
 
   public String getSelectetPoint() {
@@ -124,7 +156,11 @@ public class CompassFragment extends Fragment {
   }
 
   private void onSelectPoint() {
-    SelectInformationPointDialog dialog = new SelectInformationPointDialog(this);
+    onSelectPoint(null);
+  }
+
+  private void onSelectPoint(List<GeoPoint> points) {
+    SelectInformationPointDialog dialog = new SelectInformationPointDialog(this, points);
     dialog.show(getFragmentManager(), "select_point_dialog");
   }
 

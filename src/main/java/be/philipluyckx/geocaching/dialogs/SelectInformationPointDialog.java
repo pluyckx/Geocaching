@@ -25,9 +25,11 @@ import be.philipluyckx.geocaching.fragments.CompassFragment;
 public class SelectInformationPointDialog extends DialogFragment {
   private CompassFragment mParent;
   private ListView mPoints;
+  private List<GeoPoint> mPointsList;
 
-  public SelectInformationPointDialog(CompassFragment parent) {
+  public SelectInformationPointDialog(CompassFragment parent, List<GeoPoint> points) {
     this.mParent = parent;
+    this.mPointsList = points;
   }
 
   @Override
@@ -43,14 +45,20 @@ public class SelectInformationPointDialog extends DialogFragment {
     View v = inflater.inflate(R.layout.dialog_select_information_point, container, false);
 
     List<String> list = new ArrayList<String>();
-    for (GeoPoint p : GeocachingApplication.getApplication().getDatabaseBuffer()) {
-      list.add(p.getName());
+    if (mPointsList == null) {
+      for (GeoPoint p : GeocachingApplication.getApplication().getDatabaseBuffer()) {
+        list.add(p.getName());
+      }
+    } else {
+      for (GeoPoint p : mPointsList) {
+        list.add(p.getName());
+      }
     }
 
     Collections.sort(list);
 
     int selected = 0;
-    while(selected < list.size() && !list.get(selected).equals(mParent.getSelectetPoint())) {
+    while (selected < list.size() && !list.get(selected).equals(mParent.getSelectetPoint())) {
       selected++;
     }
 
@@ -61,8 +69,8 @@ public class SelectInformationPointDialog extends DialogFragment {
     mPoints.setOnItemClickListener(new AdapterView.OnItemClickListener() {
       @Override
       public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-          mParent.setSelectedPoint(adapterView.getItemAtPosition(i).toString());
-          dismiss();
+        mParent.setSelectedPoint(adapterView.getItemAtPosition(i).toString());
+        dismiss();
       }
     });
 

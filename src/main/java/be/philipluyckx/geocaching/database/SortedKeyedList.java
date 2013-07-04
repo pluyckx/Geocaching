@@ -1,5 +1,6 @@
 package be.philipluyckx.geocaching.database;
 
+
 import java.util.Iterator;
 
 /**
@@ -109,6 +110,7 @@ public class SortedKeyedList<K extends Comparable<K>, V> implements Iterable<V> 
     }
 
     mSize = 0;
+
     return true;
   }
 

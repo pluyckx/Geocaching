@@ -58,7 +58,7 @@ public class GeoDatabaseProxy extends Observable implements Iterable<GeoPoint> {
     if (!nameExists(point.getName())) {
       mPoints.add(point.getName(), point);
       this.setChanged();
-      this.notifyObservers();
+      this.notifyObservers(new GeoDatabaseChange(new GeoPoint[] { point }, GeoDatabaseChange.TYPE_ADD));
       if (mTransactions.add(new TransactionCreate(point))) {
         return mTransactions.get(mTransactions.size() - 1).execute(mDatabase.getWritableDatabase());
       } else {
@@ -79,7 +79,7 @@ public class GeoDatabaseProxy extends Observable implements Iterable<GeoPoint> {
     if (nameExists(point.getName())) {
       mPoints.remove(point.getName());
       this.setChanged();
-      this.notifyObservers();
+      this.notifyObservers(new GeoDatabaseChange(new GeoPoint[] { point }, GeoDatabaseChange.TYPE_REMOVE));
       if (mTransactions.add(new TransactionRemove(point))) {
         return mTransactions.get(mTransactions.size() - 1).execute(mDatabase.getWritableDatabase());
       } else {
@@ -104,7 +104,7 @@ public class GeoDatabaseProxy extends Observable implements Iterable<GeoPoint> {
     mPoints.removeAll();
 
     this.setChanged();
-    this.notifyObservers();
+    this.notifyObservers(new GeoDatabaseChange(null, GeoDatabaseChange.TYPE_REMOVE_ALL));
 
     return true;
   }
@@ -118,7 +118,7 @@ public class GeoDatabaseProxy extends Observable implements Iterable<GeoPoint> {
         mPoints.add(newPoint.getName(), newPoint);
 
         this.setChanged();
-        this.notifyObservers();
+        this.notifyObservers(new GeoDatabaseChange(new GeoPoint[] { newPoint, oldPoint}, GeoDatabaseChange.TYPE_EDIT));
         if (mTransactions.add(new TransactionEdit(oldPoint, newPoint))) {
           return mTransactions.get(mTransactions.size() - 1).execute(mDatabase.getWritableDatabase());
         } else {
@@ -148,5 +148,31 @@ public class GeoDatabaseProxy extends Observable implements Iterable<GeoPoint> {
     }
 
     return success;
+  }
+
+  public static class GeoDatabaseChange {
+    public static final int TYPE_ADD = 0;
+    public static  final int TYPE_EDIT = 1;
+    public static final int TYPE_REMOVE = 2;
+    public static final int TYPE_REMOVE_ALL = 3;
+
+    public static final int POINT_CURRENT  = 0;
+    public static final int POINT_OLD = 1;
+
+    private GeoPoint mPoint[];
+    private int mType;
+
+    public GeoDatabaseChange(GeoPoint point[], int type) {
+      mPoint = point;
+      mType = type;
+    }
+
+    public int getType() {
+      return mType;
+    }
+
+    public GeoPoint[] getPoint() {
+      return mPoint;
+    }
   }
 }

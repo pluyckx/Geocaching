@@ -37,7 +37,6 @@ public class AddPointDialog extends DialogFragment {
   private TextView mStatus;
   private Spinner mLatitudeDirection;
   private Spinner mLongitudeDirection;
-
   private GeoDatabaseProxy mDbBuffer;
 
   public AddPointDialog(GeoDatabaseProxy buffer, int title) {
@@ -60,8 +59,8 @@ public class AddPointDialog extends DialogFragment {
 
     mName = (EditText) v.findViewById(R.id.et_name);
 
-    mLatitudeDirection = (Spinner)v.findViewById(R.id.s_latitude);
-    mLongitudeDirection = (Spinner)v.findViewById(R.id.s_longitude);
+    mLatitudeDirection = (Spinner) v.findViewById(R.id.s_latitude);
+    mLongitudeDirection = (Spinner) v.findViewById(R.id.s_longitude);
 
     mLatDegree = (EditText) v.findViewById(R.id.et_latitude_degree);
     mLatMinutes = (EditText) v.findViewById(R.id.et_latitude_minutes);
@@ -90,8 +89,8 @@ public class AddPointDialog extends DialogFragment {
     final View.OnFocusChangeListener focusListener = new View.OnFocusChangeListener() {
       @Override
       public void onFocusChange(View view, boolean b) {
-        if(view instanceof  EditText) {
-          ((EditText) view).setSelection(mLatDegree.getText().length());
+        if (view instanceof EditText) {
+          ((EditText) view).setSelection(mLatDegree.getText().length() - 1);
         }
       }
     };
@@ -140,16 +139,16 @@ public class AddPointDialog extends DialogFragment {
             mLonSeconds.getText().toString());
     String name = mName.getText().toString();
 
-    if(mLatitudeDirection.getSelectedItemPosition() == 1) {
+    if (mLatitudeDirection.getSelectedItemPosition() == 1) {
       latitude = -latitude;
     }
 
-    if(mLongitudeDirection.getSelectedItemPosition() == 1) {
+    if (mLongitudeDirection.getSelectedItemPosition() == 1) {
       longitude = -longitude;
     }
 
     GeoPoint point = new GeoPoint(name, new LatLng(latitude, longitude), true);
-    if(mDbBuffer.addPoint(point)) {
+    if (mDbBuffer.addPoint(point)) {
       getDialog().dismiss();
     } else {
       mStatus.setText(R.string.msg_unknown_add_point_error);
@@ -180,10 +179,10 @@ public class AddPointDialog extends DialogFragment {
               !mLonMinutes.getText().toString().equals("") &&
               !mLonSeconds.getText().toString().equals(""));
 
-      if(s == mName.getText()) {
+      if (s == mName.getText()) {
         mNameExists = mDbBuffer.nameExists(mName.getText().toString());
 
-        if(mNameExists) {
+        if (mNameExists) {
           mStatus.setText(R.string.msg_name_exists);
         } else {
           mStatus.setText("");
