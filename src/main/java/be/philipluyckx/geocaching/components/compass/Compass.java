@@ -1,4 +1,4 @@
-package be.philipluyckx.geocaching.components;
+package be.philipluyckx.geocaching.components.compass;
 
 import android.content.Context;
 import android.graphics.Canvas;
